@@ -1,8 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, responses
 from tortoise.contrib.fastapi import register_tortoise, HTTPNotFoundError
 from pydantic import BaseModel
-from smtplib import SMTP_SSL
-from email.mime.text import MIMEText
+from smtplib import SMTP
 
 from models import EmailReq, Email_Model
 
@@ -17,29 +16,24 @@ class EmailBody(BaseModel):
     subject: str
     body: str
 
-@app.post("/send_email", response_model=Email_Model)
+@app.post("/send_email", response_class=responses.PlainTextResponse)
 async def send_email(em: EmailBody):
     await EmailReq.create(sender_email=em.sender_email, receiver_email=em.receiver_email, subject=em.subject, body=em.body)
     # return await Email_Model.from_tortoise_orm(obj)
-    try:
-        msg = MIMEText(body.message, "html")
-        msg['Subject'] = em.subject
-        msg['From'] = f'Denolyrics <{OWN_EMAIL}>'
-        msg['To'] = em.receiver_email
+    email_client = SMTP("smtp.gmail.com", 587)
+    email_client.starttls()
+    email_client.login(OWN_EMAIL, OWN_EMAIL_PASSWORD)
 
-        port = 465  # For SSL
+    to_address = em.receiver_email
+    subject = em.subject
+    body = em.body
+    
+    message = f"Subject: {subject}\n\n{body}"
 
-        # Connect to the email server
-        server = SMTP_SSL("mail.privateemail.com", port)
-        server.login(OWN_EMAIL, OWN_EMAIL_PASSWORD)
+    email_client.sendmail(OWN_EMAIL, to_address, message)
+    email_client.quit()
 
-        # Send the email
-        server.send_message(msg)
-        server.quit()
-        return {"message": "Email sent successfully"}
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=e)
+    return "Email sent successfully"
 
 register_tortoise(
     app,
