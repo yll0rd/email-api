@@ -1,4 +1,5 @@
-# Email-Api
+# Email-Api  
+This is a RESTful API built with FastAPI that allows you to send emails from your application.  
 
 Hey, wanna work on this repo?  
 1. To be able to access it locally, go to your terminal and type `git clone https://github.com/Leo-Youmbi/Email-Api.git`.  
