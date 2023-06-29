@@ -1,9 +1,28 @@
 # Email-Api  
 This is a RESTful API built with FastAPI that allows you to send emails from your application.  
+## Installation
 
-Hey, wanna work on this repo?  
-1. To be able to access it locally, go to your terminal and type `git clone https://github.com/Leo-Youmbi/Email-Api.git`.  
-2. Do not, please, forget to create a virtual environment.  
-3. You also need to install the dependencies. You can do so by typing: `pip3 install -r requirements.txt` in the root of the repo.  
+To install the Email API, clone the repository and install the dependencies:
+
+`pip install -r requirements.txt`
+
+## Usage
+
+To use the Email API, run the following command:
+
+`uvicorn main:app --port 8000`
+
+This will start the API server on port `8000`.
+
+## Endpoints
+
+The Email API provides the following endpoints:
+
+- `POST /send_email`: Send an email with the following parameters:
+  - `to`: The email address of the recipient
+  - `subject`: The subject of the email
+  - `body`: The body of the email  
   
-Done? Happy reviewing and modifications. Please, don't mind pulling some requests.
+## Contributions
+
+We welcome contributions from other developers. If you find a bug or have a feature request, please submit an issue or pull request.
