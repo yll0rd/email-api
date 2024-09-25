@@ -4,13 +4,17 @@ This is a RESTful API built with FastAPI that allows you to send emails from you
 
 To install the Email API, clone the repository and install the dependencies:
 
-`pip install -r requirements.txt`
+```bash
+pip install -r requirements.txt
+```
 
 ## Usage
 
 To use the Email API, run the following command:
 
-`uvicorn main:app --port 8000`
+```bash
+uvicorn main:app --port 8000
+```
 
 This will start the API server on port `8000`.
 

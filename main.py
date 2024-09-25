@@ -7,18 +7,23 @@ from models import EmailReq, Email_Model
 
 app = FastAPI(title="Email-Api")
 
-OWN_EMAIL = "elcappicio@gmail.com"
-OWN_EMAIL_PASSWORD = "123admin#"
+# OWN_EMAIL = "elcappicio@gmail.com"
+# OWN_EMAIL_PASSWORD = "123admin#"
+OWN_EMAIL = 'youmbileo14@gmail.com'
+OWN_EMAIL_PASSWORD = 'qrpasmjzbhqrqexh'
+
 
 class EmailBody(BaseModel):
-    sender_email: str
+    # sender_email: str
     receiver_email: str
     subject: str
     body: str
 
+
 @app.post("/send_email", response_class=responses.PlainTextResponse)
 async def send_email(em: EmailBody):
-    await EmailReq.create(sender_email=em.sender_email, receiver_email=em.receiver_email, subject=em.subject, body=em.body)
+    await EmailReq.create(sender_email=OWN_EMAIL, receiver_email=em.receiver_email, subject=em.subject,
+                          body=em.body)
     # return await Email_Model.from_tortoise_orm(obj)
     email_client = SMTP("smtp.gmail.com", 587)
     email_client.starttls()
@@ -27,13 +32,14 @@ async def send_email(em: EmailBody):
     to_address = em.receiver_email
     subject = em.subject
     body = em.body
-    
+
     message = f"Subject: {subject}\n\n{body}"
 
     email_client.sendmail(OWN_EMAIL, to_address, message)
     email_client.quit()
 
     return "Email sent successfully"
+
 
 register_tortoise(
     app,
