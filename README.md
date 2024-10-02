@@ -13,7 +13,7 @@ pip install -r requirements.txt
 To use the Email API, run the following command:
 
 ```bash
-uvicorn main:app --port 8000
+uvicorn main:app --port 8000 --reload
 ```
 
 This will start the API server on port `8000`.
